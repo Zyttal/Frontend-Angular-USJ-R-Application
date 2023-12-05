@@ -1,0 +1,68 @@
+div#data-entry {
+  font-size: 16px;
+}
+
+table#table-entry {
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 15px;
+}
+
+#table-entry th {
+  text-align: right;
+  font-size: 16px;
+  padding-right: 15px;
+  font-weight: 500;
+}
+
+#table-entry td {
+  padding: 10px;
+}
+
+input[type=text], select {
+  font-size: 16px;
+  height: 2rem;
+  width: 25rem;
+}
+
+
+select option:nth-child(1){
+  text-align: center;
+  font-weight: bold;
+}
+
+option {
+  font-size: 16px;
+}
+
+.button {
+  margin: 10px;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  line-height: 1.42857143;
+
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: dodgerblue;
+  color: white;
+
+}
+
+.btn-back {
+  background-color: rgb(199, 199, 199);
+  color: black;
+}
+
+.btn-danger {
+  background-color: crimson;
+  color: white;
+}
+
+.buttons-cell {
+  padding-top: 20px;
+  text-align: center;
+}

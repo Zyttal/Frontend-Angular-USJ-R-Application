@@ -1,0 +1,154 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { College } from 'src/app/data-models/colleges';
+import { Location } from '@angular/common';
+import { CollegeService } from 'src/app/colleges/college.service';
+import { ActivatedRoute} from '@angular/router';
+import { ProgramService } from '../program.service';
+import { Program } from 'src/app/data-models/programs';
+import { Department } from 'src/app/data-models/departments';
+import { DepartmentService } from 'src/app/departments/department.service';
+import { SnackbarService } from 'src/app/snackbar.service';
+
+@Component({
+  selector: 'app-program-details',
+  templateUrl: './program-details.component.html',
+  styleUrls: ['./program-details.component.css']
+})
+export class ProgramDetailsComponent {
+  programForm : FormGroup;
+  collegeList: College[] = [];
+  departmentList: Department[] = [];
+  progid: number;
+  program : Program;
+
+  constructor(public location: Location,
+    private collegeDB: CollegeService,
+    private route: ActivatedRoute,
+    private progDB: ProgramService,
+    private formBuilder: FormBuilder,
+    private deptDB: DepartmentService,
+    private notifications: SnackbarService) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.progid = +params.get('id');
+      this.getProgramDetails(this.progid);
+    });
+
+    this.programForm = new FormGroup({
+      progid: new FormControl(null, [Validators.required]),
+      progfullname: new FormControl(null, [Validators.required]),
+      progshortname: new FormControl(null, [Validators.required]),
+      selectedCollege: new FormControl(null, [Validators.required]),
+      selectedDepartment: new FormControl(null, [Validators.required])
+    })
+
+    this.getColleges();
+    this.getDepartments();
+  }
+
+
+  public goBack(){
+    this.location.back();
+  }
+
+  public getCollegeFullName(collid: number): string {
+    const matchedCollege = this.collegeList.find(college => college.collid == collid);
+    return matchedCollege ? matchedCollege.collfullname : '';
+  }
+
+  private getColleges(){
+    this.collegeDB.getColleges().subscribe({
+      next: response => {
+        this.collegeList = response;
+      },
+      error: error => {
+        console.log('Response has Failed.');
+        console.log(error);
+      }
+    })
+  }
+
+
+  private getDepartments(){
+    this.deptDB.getDepartments().subscribe({
+      next: response => {
+        this.departmentList = response;
+      },
+      error: error => {
+        console.log(error);
+      }
+    })
+  }
+
+  private getProgramDetails(progid: number){
+    this.progDB.getProgram(progid).subscribe({
+      next: response => {
+        this.program = response;
+        this.programForm = this.formBuilder.group({
+          progid: [{value: this.program.progid, disabled: true}],
+          progfullname: [this.program.progfullname],
+          progshortname: [this.program.progshortname],
+          selectedCollege: [this.program.progcollid],
+          selectedDepartment: [this.program.progcolldeptid],
+        })
+      }
+    })
+  }
+
+  public deleteProgram(progid: number){
+    this.progDB.removeProgram(progid).subscribe({
+      next: response =>{
+        this.notifications.openSnackBar(response.status);
+      },
+      error: error => {
+        console.error(error);
+      },
+      complete: () => {
+        this.goBack();
+      }
+    })
+  }
+
+  public saveModifications(): void{
+    if(this.programForm.valid){
+      const formData = this.programForm.value;
+
+      const updatedProgram: Program = {
+        progfullname: formData.progfullname,
+        progshortname: formData.progshortname,
+        progcollid: formData.selectedCollege.collid,
+        progcolldeptid: formData.selectedDepartment.deptid,
+        progid: this.program.progid,
+      }
+
+      console.log(updatedProgram);
+
+      this.progDB.modifyProgramDetails(updatedProgram).subscribe({
+        next: response => {
+          this.notifications.openSnackBar(response.status);
+        },
+        error: error => {
+          console.error(error);
+        },
+        complete: () => {
+          this.goBack();
+        }
+      })
+    }
+  }
+
+  public getFilteredDepartments(): Department[] | null {
+    const selectedCollege = this.programForm.get('selectedCollege');
+
+    if (!selectedCollege || !selectedCollege.value || !selectedCollege.value.collid) {
+      return null;
+    }
+
+    const collegeID = selectedCollege.value.collid;
+    const filteredPrograms = this.departmentList.filter(department => department.deptcollid === collegeID);
+
+    return filteredPrograms;
+  }
+}

@@ -1,0 +1,22 @@
+<form [formGroup]="collegeForm">
+  <table id="table-entry">
+    <tr>
+      <th><label for="id">College ID</label></th>
+      <td><input type="text" id="id" formControlName="collid" ></td>
+    </tr>
+    <tr>
+      <th><label for="fname">College Full Name</label></th>
+      <td><input type="text" id="fname" formControlName="collegefullname"></td>
+    </tr>
+    <tr>
+      <th><label for="mname">College Short Name</label></th>
+      <td><input type="text" id="mname" formControlName="collegeshortname"></td>
+    </tr>
+    <tr>
+      <td class="buttons-cell" colspan="2">
+        <button class="button btn-back" type="cancel" (click)="goBack()">Cancel</button>
+        <button class="button btn-primary" type="submit" (click)="saveCollege()">Save College</button>
+      </td>
+    </tr>
+  </table>
+</form>

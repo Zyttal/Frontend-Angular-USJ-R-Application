@@ -1,0 +1,44 @@
+<form [formGroup]="programForm">
+  <table id="table-entry">
+    <tr>
+      <th><label for="id">Program ID</label></th>
+      <td><input type="text" id="id" formControlName="progid" ></td>
+    </tr>
+    <tr>
+      <th><label for="fname">Program Full Name</label></th>
+      <td><input type="text" id="fname" formControlName="progfullname"></td>
+    </tr>
+    <tr>
+      <th><label for="mname">Program Short Name</label></th>
+      <td><input type="text" id="mname" formControlName="progshortname"></td>
+    </tr>
+    <tr>
+      <th><label for="college">College</label></th>
+      <td>
+        <select name="" id="college" formControlName="selectedCollege">
+          <option [ngValue]="null">Select College</option>
+          <option *ngFor="let college of collegeList" [ngValue]="college">
+            {{ getCollegeFullName(college.collid) }}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th><label for="college">Department</label></th>
+      <td>
+        <select name="" id="department" formControlName="selectedDepartment">
+          <option [ngValue]="null">Select Department</option>
+          <option *ngFor="let department of getFilteredDepartments()" [ngValue]="department">
+            {{ department.deptfullname }}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td class="buttons-cell" colspan="2">
+        <button class="button btn-back" type="cancel" (click)="goBack()">Cancel</button>
+        <button class="button btn-primary" type="submit" (click)="saveProgramInfo()">Save Program</button>
+      </td>
+    </tr>
+  </table>
+</form>

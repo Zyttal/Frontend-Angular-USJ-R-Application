@@ -1,0 +1,16 @@
+<div class="container">
+  <table class="department-table">
+    <tr>
+      <th>Department ID</th>
+      <th>Department Full Name</th>
+      <th>Department Short Name</th>
+      <th>Department College</th>
+    </tr>
+    <tr *ngFor="let department of departmentList" class="department-row">
+      <td> {{ department.deptid }} </td>
+      <td> {{ department.deptfullname }} </td>
+      <td> {{ department.deptshortname }} </td>
+      <td> {{ getCollegeFullName(department.deptcollid) }} </td>
+    </tr>
+  </table>
+</div>

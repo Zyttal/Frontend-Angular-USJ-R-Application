@@ -1,0 +1,60 @@
+<form [formGroup]="studentForm" (ngSubmit)="saveStudentInfo()">
+  <div class="form-container">
+    <table id="table-entry">
+      <tr>
+        <!-- student ID -->
+        <th><label for="id">Student ID</label></th>
+        <td><input type="text" id="id" formControlName="studID"></td>
+      </tr>
+      <tr>
+        <!-- student first name -->
+        <th><label for="fname">First Name</label></th>
+        <td><input type="text" id="fname" formControlName="studFirstName"></td>
+      </tr>
+      <tr>
+        <!-- student middle name -->
+        <th><label for="mname">Middle Name</label></th>
+        <td><input type="text" id="mname" formControlName="studMidName"></td>
+      </tr>
+      <tr>
+        <!-- student last name -->
+        <th><label for="lname">Last Name</label></th>
+        <td><input type="text" id="lname" formControlName="studLastName"></td>
+      </tr>
+      <tr>
+        <!-- college selection menu -->
+        <th><label for="college">College</label></th>
+        <td>
+          <select name="" id="college" formControlName="selectedCollege">
+            <option [ngValue]="null">Select College</option>
+            <option *ngFor="let college of collegeList" [ngValue]="college">
+              {{ getCollegeFullName(college.collid) }}
+            </option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <!-- program selection menu -->
+        <th><label for="program">Program</label></th>
+        <td>
+          <select name="selectedProgram" id="program" formControlName="selectedProgram">
+            <option [ngValue]="null">Select Program</option>
+            <option *ngFor="let program of getFilteredPrograms()" [ngValue]="program">
+              {{ program.progfullname }}
+            </option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <th><label for="year">Year</label></th>
+        <td><input type="text" id="year" formControlName="studYear"></td>
+      </tr>
+      <tr>
+        <td class="buttons-cell" colspan="2">
+          <button type="cancel" (click)="goBack()" class="button">Cancel</button>
+          <button type="submit" class="button btn-primary">Save Student</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>

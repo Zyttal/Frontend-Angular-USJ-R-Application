@@ -1,0 +1,92 @@
+div#data-entry {
+  font-size: 16px;
+}
+
+table#table-entry {
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 15px;
+}
+
+#table-entry th {
+  text-align: right;
+  font-size: 16px;
+  padding-right: 15px;
+  font-weight: 500;
+}
+
+#table-entry td {
+  padding: 10px;
+}
+
+input[type=text], select {
+  font-size: 16px;
+  height: 2rem;
+  width: 25rem;
+}
+
+
+select option:nth-child(1){
+  text-align: center;
+  font-weight: bold;
+}
+
+option {
+  font-size: 16px;
+}
+
+.button {
+  margin: 10px;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid transparent;
+  line-height: 1.42857143;
+
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #0D3E21;
+  color: white;
+
+  transition: 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  border: 1px #0D3E21 solid;
+  color: #0D3E21;
+  background-color: white;
+
+  transition: 0.2s ease-in-out;
+}
+
+.btn-back {
+  background-color: rgb(199, 199, 199);
+  color: black;
+
+  transition: 0.2s ease-in-out;
+}
+
+.btn-back:hover {
+  background-color: white;
+  border: 1px rgb(199, 199, 199) solid;
+}
+
+.btn-danger {
+  background-color: rgb(196, 75, 99);
+  color: white;
+
+  transition: 0.2s ease-in-out;
+}
+
+.btn-danger:hover {
+  background-color: white;
+  border: 1px rgb(196, 75, 99) solid;
+  color: rgb(196, 75, 99);
+}
+
+.buttons-cell {
+  padding-top: 20px;
+  text-align: center;
+}

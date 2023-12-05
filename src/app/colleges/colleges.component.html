@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="btn">
+    <button (click)="addCollege()">Add College</button>
+  </div>
+  <table class="college-table">
+    <tr>
+      <th>College ID</th>
+      <th>College Full Name</th>
+      <th>College Short Name</th>
+    </tr>
+    <tr *ngFor="let college of collegeList" class="college-row" (click)="viewCollegeDetails(college.collid)">
+      <td> {{ college.collid }} </td>
+      <td> {{ college.collfullname }} </td>
+      <td> {{ college.collshortname }} </td>
+    </tr>
+  </table>
+</div>

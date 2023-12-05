@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="btn">
+    <button (click)="addProgram()">Add Program</button>
+  </div>
+  <table class="program-table">
+    <tr>
+      <th>Program ID</th>
+      <th>Program Full Name</th>
+      <th>Program Short Name</th>
+      <th>College Department</th>
+    </tr>
+    <tr *ngFor="let program of programList" class="program-row" (click)="viewProgramDetails(program.progid)">
+      <td> {{ program.progid }} </td>
+      <td> {{ program.progfullname }} </td>
+      <td> {{ program.progshortname }} </td>
+      <td> {{ getCollegeFullName(program.progcollid) }} </td>
+    </tr>
+  </table>
+</div>

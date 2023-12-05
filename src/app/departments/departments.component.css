@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.department-table {
+  margin: 25px;
+  width: 80%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.department-table th {
+  font-weight: 500;
+  font-size: 16px;
+  padding: 20px;
+}
+
+.department-table td {
+  padding: 20px;
+  border-top: 5px black;
+}
+
+.department-row{
+  border-top: 1px rgb(218, 218, 218) solid;
+  border-bottom: 1px rgb(218, 218, 218) solid;
+  transition: 0.2s ease-in-out;
+  font-weight: 100;
+}
+
+.department-row:hover {
+  background-color: rgb(233, 233, 233);
+}

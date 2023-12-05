@@ -1,0 +1,67 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.info-section {
+  position: relative;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -20px 0 0 0; /* Adjust margin as needed */
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('src/assets/images/USJ-R-Main-Facade-for-web.jpg');
+  background-size: cover;
+  z-index: 1;
+}
+
+.background-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(13, 62, 33, 0.8);
+  z-index: 1;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+
+.heading, .sub-heading {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  align-self: center;
+}
+
+.heading {
+  font-size: 100px;
+  color: #ffc670;
+  font-weight: 700;
+  margin-bottom: 50px;
+}
+
+.sub-heading {
+  font-weight: 300;
+  font-size: 18px;
+  color: white;
+
+  display: block;
+  width: 50%;
+}
