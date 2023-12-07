@@ -12,7 +12,8 @@ export class SnackbarService {
     this.snackBar.open(message, 'close', {
       duration: 3000,
       verticalPosition: 'top',
-      horizontalPosition: 'center'
+      horizontalPosition: 'center',
+      panelClass: 'snackbar-notif'
     });
   }
 }

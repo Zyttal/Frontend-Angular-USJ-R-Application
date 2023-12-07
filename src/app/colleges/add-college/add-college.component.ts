@@ -51,7 +51,7 @@ export class AddCollegeComponent {
         }
       })
     }else{
-      console.error();
+      this.notification.openSnackBar("This Form has invalid inputs.");
     }
   }
 }

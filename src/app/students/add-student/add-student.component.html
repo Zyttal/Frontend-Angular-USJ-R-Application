@@ -1,10 +1,10 @@
-<form [formGroup]="studentForm" (ngSubmit)="saveStudentInfo()">
+<form [formGroup]="studentForm">
   <div class="form-container">
     <table id="table-entry">
       <tr>
         <!-- student ID -->
         <th><label for="id">Student ID</label></th>
-        <td><input type="text" id="id" formControlName="studID"></td>
+        <td><input type="number" id="id" formControlName="studID"></td>
       </tr>
       <tr>
         <!-- student first name -->
@@ -47,12 +47,12 @@
       </tr>
       <tr>
         <th><label for="year">Year</label></th>
-        <td><input type="text" id="year" formControlName="studYear"></td>
+        <td><input type="number" id="year" formControlName="studYear"></td>
       </tr>
       <tr>
         <td class="buttons-cell" colspan="2">
           <button type="cancel" (click)="goBack()" class="button">Cancel</button>
-          <button type="submit" class="button btn-primary">Save Student</button>
+          <button type="submit" class="button btn-primary" (click)="saveStudentInfo()">Save Student</button>
         </td>
       </tr>
     </table>

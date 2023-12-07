@@ -7,7 +7,7 @@ import { StudentRequest } from '../data-models/students';
   providedIn: 'root'
 })
 export class StudentService {
-  baseURL: string = "http://localhost/usjr-app/api/"
+  baseURL: string = "http://localhost/usjr-app/api/";
 
   constructor(private http: HttpClient) {}
 
@@ -46,8 +46,8 @@ export class StudentService {
       );
   }
 
-  removeStudent(studentId: number): Observable<any> {
-    return this.http.post<any>(this.baseURL + 'removestudent.php', {studid :studentId});
+  removeStudent(studid: number): Observable<any> {
+    return this.http.post<any>(this.baseURL + 'removestudent.php', {studid});
   }
 
 }

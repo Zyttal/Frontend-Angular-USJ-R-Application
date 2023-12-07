@@ -3,7 +3,7 @@
     <tr>
       <!-- student ID -->
       <th><label for="id">Student ID</label></th>
-      <td><input type="text" id="id" formControlName="studid" ></td>
+      <td><input type="number" id="id" formControlName="studid" ></td>
     </tr>
     <tr>
       <!-- student first name -->
@@ -24,8 +24,8 @@
       <!-- college selection menu -->
       <th><label for="college">College</label></th>
       <td>
-        <select name="" id="college" formControlName="selectedCollege">
-          <option *ngFor="let college of collegeList" [ngValue]="college" >
+        <select id="college" formControlName="selectedCollege">
+          <option *ngFor="let college of collegeList" [ngValue]="college.collid">
             {{ getCollegeFullName(college.collid) }}
           </option>
         </select>
@@ -35,20 +35,20 @@
       <!-- program selection menu -->
       <th><label for="program">Program</label></th>
       <td>
-        <select name="selectedProgram" id="program" formControlName="selectedProgram">
-          <option *ngFor="let program of getFilteredPrograms()" [ngValue]="program">
-            {{ program.progfullname }}
+        <select id="program" formControlName="selectedProgram">
+          <option *ngFor="let program of programList" [ngValue]="program.progid">
+            {{ getProgramFullName(program.progid) }}
           </option>
         </select>
       </td>
     </tr>
     <tr>
       <th><label for="year">Year</label></th>
-      <td><input type="text" id="year" formControlName="studyear"></td>
+      <td><input type="number" id="year" formControlName="studyear"></td>
     </tr>
     <tr>
       <td class="buttons-cell" colspan="2">
-        <button class="button btn-back" type="cancel" (click)="goBack()">Cancel</button>
+        <button class="button btn-back" type="back" (click)="goBack()">Cancel</button>
         <button class="button btn-danger" type="delete" (click)="deleteStudent(student.studid)">Remove Student</button>
         <button class="button btn-primary" type="submit" (click)="saveModifications()">Update Student Details</button>
       </td>

@@ -9,6 +9,8 @@ import { Program } from 'src/app/data-models/programs';
 import { Department } from 'src/app/data-models/departments';
 import { DepartmentService } from 'src/app/departments/department.service';
 import { SnackbarService } from 'src/app/snackbar.service';
+import { StudentService } from 'src/app/students/student.service';
+import { Student } from 'src/app/data-models/students';
 
 @Component({
   selector: 'app-program-details',
@@ -19,6 +21,7 @@ export class ProgramDetailsComponent {
   programForm : FormGroup;
   collegeList: College[] = [];
   departmentList: Department[] = [];
+  studentsList: Student[] = [];
   progid: number;
   program : Program;
 
@@ -28,7 +31,8 @@ export class ProgramDetailsComponent {
     private progDB: ProgramService,
     private formBuilder: FormBuilder,
     private deptDB: DepartmentService,
-    private notifications: SnackbarService) {}
+    private notifications: SnackbarService,
+    private studentsDB : StudentService) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -46,6 +50,7 @@ export class ProgramDetailsComponent {
 
     this.getColleges();
     this.getDepartments();
+    this.getStudents();
   }
 
 
@@ -56,6 +61,11 @@ export class ProgramDetailsComponent {
   public getCollegeFullName(collid: number): string {
     const matchedCollege = this.collegeList.find(college => college.collid == collid);
     return matchedCollege ? matchedCollege.collfullname : '';
+  }
+
+  public getDepartmentFullName(deptid: number): string {
+    const matchedDepartment = this.departmentList.find(department => department.deptid == deptid);
+    return matchedDepartment ? matchedDepartment.deptfullname : '';
   }
 
   private getColleges(){
@@ -70,6 +80,17 @@ export class ProgramDetailsComponent {
     })
   }
 
+  private getStudents(){
+    this.studentsDB.getStudents().subscribe({
+      next: response => {
+        this.studentsList = response;
+      },
+      error: error => {
+        console.log('Response has Failed');
+        console.log(error);
+      }
+    })
+  }
 
   private getDepartments(){
     this.deptDB.getDepartments().subscribe({
@@ -98,6 +119,7 @@ export class ProgramDetailsComponent {
   }
 
   public deleteProgram(progid: number){
+
     this.progDB.removeProgram(progid).subscribe({
       next: response =>{
         this.notifications.openSnackBar(response.status);
@@ -118,8 +140,8 @@ export class ProgramDetailsComponent {
       const updatedProgram: Program = {
         progfullname: formData.progfullname,
         progshortname: formData.progshortname,
-        progcollid: formData.selectedCollege.collid,
-        progcolldeptid: formData.selectedDepartment.deptid,
+        progcollid: formData.selectedCollege,
+        progcolldeptid: formData.selectedDepartment,
         progid: this.program.progid,
       }
 
@@ -128,13 +150,13 @@ export class ProgramDetailsComponent {
       this.progDB.modifyProgramDetails(updatedProgram).subscribe({
         next: response => {
           this.notifications.openSnackBar(response.status);
+          if(response.code == 200)
+            this.goBack();
         },
         error: error => {
           console.error(error);
         },
-        complete: () => {
-          this.goBack();
-        }
+        complete: () => {}
       })
     }
   }

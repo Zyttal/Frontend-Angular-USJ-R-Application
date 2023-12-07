@@ -91,14 +91,16 @@ export class AddProgramComponent {
       this.progDB.addProgram(newProgram).subscribe({
         next: response => {
           this.notification.openSnackBar(response.status);
+          if(response.code == 200)
+            this.goBack();
         },
         error: error => {
           console.log(error);
         },
-        complete: () => {
-          this.goBack();
-        }
+        complete: () => {}
       })
+    }else{
+      this.notification.openSnackBar("Form has some invalid inputs.");
     }
   }
 

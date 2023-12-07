@@ -29,10 +29,17 @@
 }
 
 /* Angular Stuff */
+
 .active-link {
   color: #ffc670 !important;
 }
 
 .active-link:hover {
   color: #0D3E21 !important;
+}
+
+.snackbar-notif {
+  background-color: white;
+  color: #0D3E21;
+  border-color: #ffc670;
 }

@@ -5,6 +5,8 @@ import { CollegeService } from '../college.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { SnackbarService } from 'src/app/snackbar.service';
+import { ProgramService } from 'src/app/programs/program.service';
+import { Program } from 'src/app/data-models/programs';
 
 @Component({
   selector: 'app-college-details',
@@ -16,10 +18,13 @@ export class CollegeDetailsComponent {
     private collegeDB: CollegeService,
     private formBuilder: FormBuilder,
     private location: Location,
-    private notification: SnackbarService){}
+    private notification: SnackbarService,
+    private programsDB: ProgramService){}
+
   collegeForm: FormGroup;
   college:College;
   collid:number;
+  programList: Program[] = [];
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -32,6 +37,8 @@ export class CollegeDetailsComponent {
       collegefullname: new FormControl(null, [Validators.required,  Validators.pattern('^[a-zA-Z]+([- ][a-zA-Z]+)*$')]),
       collegeshortname: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]+([- ][a-zA-Z]+)*$')], ),
     })
+
+    this.getPrograms();
   }
 
   private getCollege(collid:number): void{
@@ -45,6 +52,17 @@ export class CollegeDetailsComponent {
         })
       },
       error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  private getPrograms(){
+    this.programsDB.getPrograms().subscribe({
+      next: response => {
+        this.programList = response;
+      },
+      error: error => {
         console.error(error);
       }
     })
@@ -69,13 +87,13 @@ export class CollegeDetailsComponent {
       this.collegeDB.modifyCollegeDetails(updatedCollege).subscribe({
         next: response => {
           this.notification.openSnackBar(response.status);
+          if(response.code == 200)
+            this.goBack();
         },
         error: error => {
           console.log(error);
         },
-        complete: () => {
-          this.goBack();
-        }
+        complete: () => {}
       })
     }else {
       console.error();
@@ -83,6 +101,12 @@ export class CollegeDetailsComponent {
   }
 
   public deleteCollege(collid: number): void{
+
+    if(this.programList.find(program => collid == program.progcollid)){
+      this.notification.openSnackBar("There are Program(s) are currently enlisted under this College");
+      return;
+    }
+
     this.collegeDB.removeCollege(collid).subscribe({
       next: response => {
         this.notification.openSnackBar(response.status);

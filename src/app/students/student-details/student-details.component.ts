@@ -21,9 +21,9 @@ export class StudentDetailsComponent implements OnInit {
   student: Student;
   collegeList: College[] = [];
   programList: Program[] = [];
-
-  selectedCollege: College;
-  selectedProgram: Program;
+  filteredProgramList: Program[] = [];
+  studentCollege: College;
+  studentProgram: Program;
 
     constructor(private collegeDB: CollegeService,
                 private programsDB: ProgramService,
@@ -34,11 +34,6 @@ export class StudentDetailsComponent implements OnInit {
                 private notification: SnackbarService) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.studentId = +params.get('id');
-      this.getStudentDetails(this.studentId);
-    });
-
     this.studentForm = new FormGroup({
       studid: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]+$')]),
       studfirstname: new FormControl(null, [Validators.required,  Validators.pattern('^[a-zA-Z]+([- ][a-zA-Z]+)*$')]),
@@ -47,7 +42,12 @@ export class StudentDetailsComponent implements OnInit {
       selectedCollege: new FormControl(null, [Validators.required]),
       selectedProgram: new FormControl(null, [Validators.required]),
       studyear: new FormControl(null, [Validators.required, Validators.pattern('^[1-5]+$')]),
-    })
+    });
+
+    this.route.paramMap.subscribe(params => {
+      this.studentId = +params.get('id');
+      this.getStudentDetails(this.studentId);
+    });
 
     this.getColleges();
     this.getPrograms();
@@ -57,15 +57,18 @@ export class StudentDetailsComponent implements OnInit {
     this.studentsDB.getStudentInfo(id).subscribe({
       next: response => {
         this.student = response;
+
         this.studentForm = this.formBuilder.group({
-          studid: [{value: this.student.studid, disabled: true}, Validators.required],
-          studfirstname: [this.student.studfirstname, Validators.required],
-          studlastname: [this.student.studlastname, Validators.required],
-          studmidname: [this.student.studmidname, Validators.required],
-          selectedCollege: [this.student.studcollid, Validators.required],
-          selectedProgram: [this.student.studprogid, Validators.required],
-          studyear: [this.student.studyear, Validators.required]
+          studid: {value: this.student.studid, disabled: true},
+          studfirstname: this.student.studfirstname,
+          studlastname: this.student.studlastname,
+          studmidname: this.student.studmidname,
+          selectedCollege: this.student.studcollid || '',
+          selectedProgram: this.student.studprogid || '',
+          studyear: this.student.studyear
         });
+        console.log(this.studentForm);
+        this.filteredProgramList =  this.getFilteredPrograms();
       },
       error: error => {
         console.log(error)
@@ -96,8 +99,8 @@ export class StudentDetailsComponent implements OnInit {
         studFirstName: formData.studfirstname,
         studMidName: formData.studmidname,
         studLastName: formData.studlastname,
-        studCollId: formData.selectedCollege.collid,
-        studProgId: formData.selectedProgram.progid,
+        studCollId: formData.selectedCollege,
+        studProgId: formData.selectedProgram,
         studYear: formData.studyear,
         studID: this.student.studid,
       };
@@ -107,12 +110,14 @@ export class StudentDetailsComponent implements OnInit {
       this.studentsDB.modifyStudentDetails(updatedStudent).subscribe({
         next: response => {
           this.notification.openSnackBar(response.status);
+          if(response.code == 200)
+            this.goBack();
         },
         error: error => {
           console.log(error);
         },
         complete: () => {
-          this.goBack();
+
         }
       })
     }else {
@@ -167,10 +172,5 @@ export class StudentDetailsComponent implements OnInit {
   public getProgramFullName(progid: number): string {
     const matchedProgram = this.programList.find(program => program.progid === progid);
     return matchedProgram ? matchedProgram.progfullname : '';
-  }
-
-  public findMatchingCollege(collid: number): College {
-    const matchedCollege = this.collegeList.find(college => college.collid === collid);
-    return matchedCollege;
   }
 }

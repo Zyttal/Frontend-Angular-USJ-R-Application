@@ -1,8 +1,8 @@
-<form [formGroup]="programForm">
+<form [formGroup]="programForm" (ngSubmit)="saveModifications()">
   <table id="table-entry">
     <tr>
       <th><label for="id">Program ID</label></th>
-      <td><input type="text" id="id" formControlName="progid" ></td>
+      <td><input type="number" id="id" formControlName="progid" ></td>
     </tr>
     <tr>
       <th><label for="fname">Program Full Name</label></th>
@@ -15,8 +15,8 @@
     <tr>
       <th><label for="college">College</label></th>
       <td>
-        <select name="" id="college" formControlName="selectedCollege">
-          <option *ngFor="let college of collegeList" [ngValue]="college">
+        <select id="college" formControlName="selectedCollege">
+          <option *ngFor="let college of collegeList" [ngValue]="college.collid">
             {{ getCollegeFullName(college.collid) }}
           </option>
         </select>
@@ -25,9 +25,9 @@
     <tr>
       <th><label for="college">Department</label></th>
       <td>
-        <select name="" id="department" formControlName="selectedDepartment">
-          <option *ngFor="let department of getFilteredDepartments()" [ngValue]="department">
-            {{ department.deptfullname }}
+        <select id="department" formControlName="selectedDepartment">
+          <option *ngFor="let department of departmentList" [ngValue]="department.deptid">
+            {{ getDepartmentFullName(department.deptid) }}
           </option>
         </select>
       </td>

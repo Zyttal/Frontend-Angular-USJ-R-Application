@@ -19,10 +19,15 @@ table#table-entry {
   padding: 10px;
 }
 
-input[type=text], select {
+input, select {
   font-size: 16px;
   height: 2rem;
   width: 25rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
 }
 
 option {

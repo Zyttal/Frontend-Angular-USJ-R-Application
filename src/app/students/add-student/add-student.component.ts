@@ -28,11 +28,11 @@ export class AddStudentComponent {
     this.studentForm = new FormGroup({
       studID: new FormControl(null, [Validators.required, Validators.pattern('^[0-9]+$')]),
       studFirstName: new FormControl(null, [Validators.required,  Validators.pattern('^[a-zA-Z]+([- ][a-zA-Z]+)*$')]),
-      studMidName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]+([- ][a-zA-Z]+)*$')], ),
+      studMidName: new FormControl(null, [Validators.pattern('^[a-zA-Z]+([- ][a-zA-Z]+)*$')], ),
       studLastName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z]+([- ][a-zA-Z]+)*$')]),
       selectedCollege: new FormControl(null, [Validators.required]),
       selectedProgram: new FormControl(null, [Validators.required]),
-      studYear: new FormControl(null, [Validators.required, Validators.pattern('^[1-5]+$')]),
+      studYear: new FormControl(null, [Validators.required, Validators.pattern('^[1-5]$')]),
     })
 
     this.getColleges();
@@ -53,31 +53,33 @@ export class AddStudentComponent {
       const formData = this.studentForm.value;
 
       const newStudent: StudentRequest = {
-        studID: formData.studID,
+        studID: parseInt(formData.studID),
         studFirstName: formData.studFirstName,
         studLastName: formData.studLastName,
         studMidName: formData.studMidName,
         studProgId: formData.selectedProgram.progid,
         studCollId: formData.selectedCollege.collid,
-        studYear: formData.studYear,
+        studYear: parseInt(formData.studYear),
       };
 
       console.log(newStudent);
 
       this.studentsDB.addStudent(newStudent).subscribe({
         next: response => {
+          console.log(response);
           this.notification.openSnackBar(response.status);
+          if(response.code == 200){
+            this.goBack();
+          }
         },
         error: error => {
           console.log(error);
         },
-        complete: () =>{
-          this.goBack();
-        }
+        complete: () =>{}
       })
 
     }else{
-      console.error();
+      this.notification.openSnackBar("Form has Invalid Inputs");
     }
   }
 
