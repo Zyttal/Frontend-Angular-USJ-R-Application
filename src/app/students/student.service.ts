@@ -7,47 +7,30 @@ import { StudentRequest } from '../data-models/students';
   providedIn: 'root'
 })
 export class StudentService {
-  baseURL: string = "http://localhost/usjr-app/api/";
+  baseURL: string = "http://localhost:8000/usjr-app/api/colleges/";
 
   constructor(private http: HttpClient) {}
 
   getStudents(): Observable<any> {
-    return this.http.get(this.baseURL + 'getstudents.php')
+    return this.http.get(this.baseURL)
   }
 
   getStudentInfo(studid: number): Observable<any> {
-    return this.http.post<any>(`${this.baseURL}getstudentinfo.php`, {studid});
+    return this.http.get("this.baseURL" + `${studid}/`);
   }
 
   addStudent(studentData: StudentRequest): Observable<any> {
     const headers = {'content-type': 'application/json'};
-    const body = JSON.stringify(studentData);
-    console.log(body);
-    return this.http.post(`${this.baseURL}savestudent.php`, body)
-      .pipe(
-        catchError(error => {
-          throw error;
-        })
-      );
+    return this.http.post(`${this.baseURL}`, JSON.stringify(studentData), {headers:headers});
   }
 
   modifyStudentDetails(studentData: StudentRequest): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    return this.http.post(this.baseURL + 'poststudentupdates.php',JSON.stringify(studentData))
-      .pipe(
-        catchError(error => {
-          throw error;
-        })
-      );
+    const headers = {'content-type': 'application/json'};
+    return this.http.patch(this.baseURL + `${studentData.studID}`,JSON.stringify(studentData), {headers:headers})
   }
 
   removeStudent(studid: number): Observable<any> {
-    return this.http.post<any>(this.baseURL + 'removestudent.php', {studid});
+    return this.http.delete<any>(this.baseURL + `${studid}/`);
   }
 
 }

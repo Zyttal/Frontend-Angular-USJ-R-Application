@@ -7,34 +7,29 @@ import { Observable, catchError, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class CollegeService {
-  baseURL: string = "http://localhost/usjr-app/api/"
+  baseURL: string = "http://localhost:8000/usjr-app/api/colleges/"
 
   constructor(private http: HttpClient) { }
 
   getColleges(): Observable<any> {
-    return this.http.get(this.baseURL + 'getcolleges.php');
+    return this.http.get(this.baseURL)
   }
 
   getCollegeInfo(collid: number): Observable<any> {
-    return this.http.post<any>(`${this.baseURL}getcollegeinfo.php`, {collid});
+    return this.http.get(this.baseURL + `${collid}/`)
   }
 
   addCollege(college: College): Observable<any> {
-    // const headers = {'content-type': 'application/json'};
-    return this.http.post(this.baseURL + 'savecollege.php', JSON.stringify(college))
-      .pipe(catchError(error => {
-        throw error;
-      }))
+    const headers = {'content-type': 'application/json'};
+    return this.http.post(this.baseURL, JSON.stringify(college), { headers: headers})
   }
 
   modifyCollegeDetails(collegeData:College): Observable<any> {
-    return this.http.post(this.baseURL + 'postcollegeupdates.php', JSON.stringify(collegeData))
-      .pipe(catchError(error => {
-        throw error;
-      }))
+    const headers = {'content-type': 'application/json'};
+    return this.http.patch(`${this.baseURL}${collegeData.collid}/`, JSON.stringify(collegeData), { headers: headers})
   }
 
   removeCollege(collid: number): Observable<any> {
-    return this.http.post<any>(this.baseURL + 'removecollege.php', {collid: collid});
+    return this.http.delete(this.baseURL + `${collid}/`)
   }
 }

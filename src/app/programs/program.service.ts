@@ -7,43 +7,29 @@ import { Program } from '../data-models/programs';
   providedIn: 'root'
 })
 export class ProgramService {
-  baseURL: string = "http://localhost/usjr-app/api/"
+  baseURL: string = "http://localhost:8000/usjr-app/api/programs/"
 
   constructor(private http: HttpClient) { }
 
   getPrograms(): Observable<any> {
-    return this.http.get(this.baseURL + 'getprograms.php');
+    return this.http.get(this.baseURL);
   }
 
   getProgram(progid: number): Observable<any> {
-    return this.http.post(this.baseURL + 'getprograminfo.php', {progid});
+    return this.http.get(`${this.baseURL}` + `${progid}/`);
   }
 
   addProgram(program: Program): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http.post(this.baseURL + 'saveprogram.php', JSON.stringify(program))
-      .pipe(catchError(error => {
-        throw error;
-      }))
+    const headers = {'content-type': 'application/json'};
+    return this.http.post(`${this.baseURL}`, JSON.stringify(program), {headers:headers})
   }
 
   removeProgram(progid: number): Observable<any> {
-    return this.http.post<any>(this.baseURL + 'removeprogram.php', {progid :progid});
+    return this.http.delete(this.baseURL + `${progid}/`);
   }
 
   modifyProgramDetails(programData:Program): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http.post<any>(this.baseURL + 'postprogramupdates.php', JSON.stringify(programData))
-      .pipe(catchError(error => {
-        throw error;
-      }))
+    const headers = {'content-type': 'application/json'};
+    return this.http.post<any>(this.baseURL + `${programData.progid}/`, JSON.stringify(programData), {headers:headers})
   }
 }

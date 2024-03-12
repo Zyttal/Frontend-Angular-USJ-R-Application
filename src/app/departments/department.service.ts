@@ -6,11 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DepartmentService {
-  baseURL: string = "http://localhost/usjr-app/api/"
+  baseURL: string = "http://localhost:8000/usjr-app/api/departments/"
 
   constructor(private http: HttpClient) { }
 
   getDepartments(): Observable<any> {
-    return this.http.get(this.baseURL + 'getdepartments.php');
+    return this.http.get(this.baseURL);
   }
 }
