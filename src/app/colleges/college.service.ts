@@ -7,7 +7,7 @@ import { Observable, catchError, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class CollegeService {
-  baseURL: string = "http://localhost:8000/usjr-app/api/colleges/"
+  baseURL: string = "http://localhost:8000/usjr-app/api/colleges/";
 
   constructor(private http: HttpClient) { }
 
