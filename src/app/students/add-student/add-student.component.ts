@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CollegeService } from 'src/app/colleges/college.service';
 import { College } from 'src/app/data-models/colleges';
 import { Program } from 'src/app/data-models/programs';
-import { Student, StudentRequest } from 'src/app/data-models/students';
+import { Student } from 'src/app/data-models/students';
 import { ProgramService } from 'src/app/programs/program.service';
 import { StudentService } from '../student.service';
 import { Location } from '@angular/common';
@@ -52,14 +52,14 @@ export class AddStudentComponent {
     if(this.studentForm.valid){
       const formData = this.studentForm.value;
 
-      const newStudent: StudentRequest = {
-        studID: parseInt(formData.studID),
-        studFirstName: formData.studFirstName,
-        studLastName: formData.studLastName,
-        studMidName: formData.studMidName,
-        studProgId: formData.selectedProgram.progid,
-        studCollId: formData.selectedCollege.collid,
-        studYear: parseInt(formData.studYear),
+      const newStudent: Student = {
+        studid: parseInt(formData.studID),
+        studfirstname: formData.studFirstName,
+        studlastname: formData.studLastName,
+        studmidname: formData.studMidName,
+        studprogid: formData.selectedProgram.progid,
+        studcollid: formData.selectedCollege.collid,
+        studyear: parseInt(formData.studYear),
       };
 
       console.log(newStudent);
