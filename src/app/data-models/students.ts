@@ -7,13 +7,3 @@ export type Student = {
   studprogid: number,
   studyear: number
 }
-
-export type StudentRequest = {
-  studID: number,
-  studFirstName: string,
-  studLastName: string,
-  studMidName: string,
-  studProgId: number,
-  studCollId: number,
-  studYear: number
-}

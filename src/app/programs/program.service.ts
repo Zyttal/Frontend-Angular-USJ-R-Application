@@ -30,6 +30,6 @@ export class ProgramService {
 
   modifyProgramDetails(programData:Program): Observable<any> {
     const headers = {'content-type': 'application/json'};
-    return this.http.post<any>(this.baseURL + `${programData.progid}/`, JSON.stringify(programData), {headers:headers})
+    return this.http.patch(this.baseURL + `${programData.progid}/`, JSON.stringify(programData), {headers:headers})
   }
 }

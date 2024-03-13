@@ -7,7 +7,7 @@ import { ProgramService } from 'src/app/programs/program.service';
 import { College } from 'src/app/data-models/colleges';
 import { Program } from 'src/app/data-models/programs';
 import { ActivatedRoute } from '@angular/router';
-import { Student, StudentRequest } from 'src/app/data-models/students';
+import { Student } from 'src/app/data-models/students';
 import { SnackbarService } from 'src/app/snackbar.service';
 
 @Component({
@@ -95,14 +95,14 @@ export class StudentDetailsComponent implements OnInit {
 
       console.log(formData);
 
-      const updatedStudent: StudentRequest = {
-        studFirstName: formData.studfirstname,
-        studMidName: formData.studmidname,
-        studLastName: formData.studlastname,
-        studCollId: formData.selectedCollege,
-        studProgId: formData.selectedProgram,
-        studYear: formData.studyear,
-        studID: this.student.studid,
+      const updatedStudent: Student = {
+        studfirstname: formData.studfirstname,
+        studmidname: formData.studmidname,
+        studlastname: formData.studlastname,
+        studcollid: formData.selectedCollege,
+        studprogid: formData.selectedProgram,
+        studyear: formData.studyear,
+        studid: this.student.studid,
       };
 
       console.log(updatedStudent);

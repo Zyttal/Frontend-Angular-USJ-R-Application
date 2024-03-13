@@ -21,12 +21,12 @@ export class CollegeService {
 
   addCollege(college: College): Observable<any> {
     const headers = {'content-type': 'application/json'};
-    return this.http.post(this.baseURL, JSON.stringify(college), { headers: headers})
+    return this.http.post(this.baseURL, JSON.stringify(college), {headers: headers})
   }
 
   modifyCollegeDetails(collegeData:College): Observable<any> {
     const headers = {'content-type': 'application/json'};
-    return this.http.patch(`${this.baseURL}${collegeData.collid}/`, JSON.stringify(collegeData), { headers: headers})
+    return this.http.patch(`${this.baseURL}${collegeData.collid}/`, JSON.stringify(collegeData), {headers: headers})
   }
 
   removeCollege(collid: number): Observable<any> {
