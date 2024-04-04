@@ -47,6 +47,7 @@ export class AddCollegeComponent {
           console.log(error);
         },
         complete: () => {
+          this.notification.openSnackBar("College Successfully Added!");
           this.goBack();
         }
       })

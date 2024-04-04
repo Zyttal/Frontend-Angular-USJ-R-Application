@@ -24,6 +24,8 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { CollegeDetailsComponent } from './colleges/college-details/college-details.component';
 import { AddProgramComponent } from './programs/add-program/add-program.component';
 import { ProgramDetailsComponent } from './programs/program-details/program-details.component';
+import { DepartmentDetailsComponent } from './departments/department-details/department-details.component';
+import { AddDepartmentComponent } from './departments/add-department/add-department.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ProgramDetailsComponent } from './programs/program-details/program-deta
     DepartmentsComponent,
     CollegeDetailsComponent,
     AddProgramComponent,
-    ProgramDetailsComponent
+    ProgramDetailsComponent,
+    DepartmentDetailsComponent,
+    AddDepartmentComponent
   ],
   imports: [
     BrowserModule,

@@ -108,13 +108,11 @@ export class CollegeDetailsComponent {
     }
 
     this.collegeDB.removeCollege(collid).subscribe({
-      next: response => {
-        this.notification.openSnackBar(response.status);
-      },
       error: error => {
         console.log(error);
       },
       complete: () =>{
+        this.notification.openSnackBar("College Details Successfully Modified!");
         this.goBack();
       }
     })

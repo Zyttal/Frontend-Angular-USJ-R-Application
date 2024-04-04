@@ -66,16 +66,14 @@ export class AddStudentComponent {
 
       this.studentsDB.addStudent(newStudent).subscribe({
         next: response => {
-          console.log(response);
-          this.notification.openSnackBar(response.status);
-          if(response.code == 200){
-            this.goBack();
-          }
         },
         error: error => {
           console.log(error);
         },
-        complete: () =>{}
+        complete: () =>{
+          this.notification.openSnackBar("Student Successfully Added!");
+          this.goBack();
+        }
       })
 
     }else{

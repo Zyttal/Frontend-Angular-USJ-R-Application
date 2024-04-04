@@ -121,13 +121,11 @@ export class ProgramDetailsComponent {
   public deleteProgram(progid: number){
 
     this.progDB.removeProgram(progid).subscribe({
-      next: response =>{
-        this.notifications.openSnackBar(response.status);
-      },
       error: error => {
         console.error(error);
       },
       complete: () => {
+        this.notifications.openSnackBar("Program Successfully Deleted!");
         this.goBack();
       }
     })
@@ -148,15 +146,13 @@ export class ProgramDetailsComponent {
       console.log(updatedProgram);
 
       this.progDB.modifyProgramDetails(updatedProgram).subscribe({
-        next: response => {
-          this.notifications.openSnackBar(response.status);
-          if(response.code == 200)
-            this.goBack();
-        },
         error: error => {
           console.error(error);
         },
-        complete: () => {}
+        complete: () => {
+          this.notifications.openSnackBar("Program Details Successfully Modified!");
+          this.goBack();
+        }
       })
     }
   }

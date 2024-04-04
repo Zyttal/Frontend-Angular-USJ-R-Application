@@ -108,16 +108,12 @@ export class StudentDetailsComponent implements OnInit {
       console.log(updatedStudent);
 
       this.studentsDB.modifyStudentDetails(updatedStudent).subscribe({
-        next: response => {
-          this.notification.openSnackBar(response.status);
-          if(response.code == 200)
-            this.goBack();
-        },
         error: error => {
           console.log(error);
         },
         complete: () => {
-
+          this.notification.openSnackBar("Student Details Successfully Updated!");
+          this.goBack();
         }
       })
     }else {
@@ -127,13 +123,11 @@ export class StudentDetailsComponent implements OnInit {
 
   public deleteStudent(studentId: number): void {
     this.studentsDB.removeStudent(studentId).subscribe({
-      next: response => {
-        this.notification.openSnackBar(response.status);
-      },
       error: error => {
         console.log(error);
       },
       complete: () => {
+        this.notification.openSnackBar("Student Successfully Deleted!");
         this.goBack();
       }
     })
